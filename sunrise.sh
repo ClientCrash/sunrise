@@ -46,6 +46,11 @@ get_packages() {
     esac
 }
 
+# Function to get the weather information
+get_weather() {
+    curl -s "https://wttr.in/?format=3"
+}
+
 # Fetch system information
 CURRENT_USER=$(whoami)
 UPTIME=$(uptime -p)
@@ -53,6 +58,7 @@ HOSTNAME=$(hostname)
 NUM_CORES=$(nproc)
 PACKAGE_MANAGER=$(get_package_manager)
 NUM_PACKAGES=$(get_packages)
+WEATHER=$(get_weather)
 
 # Display the information
 print_with_colors "Hey, " "$CURRENT_USER"
@@ -61,6 +67,7 @@ print_with_colors "Uptime: " "$UPTIME"
 print_with_colors "Number of Cores: " "$NUM_CORES"
 echo -ne "${RED}Number of Installed Packages: ${NC}"
 echo -ne "${YELLOW}${NUM_PACKAGES}${NC} "
-echo -ne "${PURPLE}(${PACKAGE_MANAGER})${NC}"
-echo
-
+echo -ne "${PURPLE}(${PACKAGE_MANAGER})${NC}\n"
+echo "-"
+echo -ne "${PURPLE}$WEATHER${NC}\n"
+echo "---"
